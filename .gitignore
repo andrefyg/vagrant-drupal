@@ -1,3 +1,2 @@
-./cookbooks/*
-./www/*
+.vagrant
 .idea
