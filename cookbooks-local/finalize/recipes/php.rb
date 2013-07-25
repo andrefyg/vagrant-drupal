@@ -21,10 +21,6 @@ package "php-xml" do
   action :install
 end
 
-package "php-pear" do
-  action :install
-end
-
 #Pear auto discover option
 execute "pear_config" do
 	command "pear config-set auto_discover 1"
@@ -52,4 +48,12 @@ end
     php_pear package_name do
         action :install
     end
+end
+
+#Xdebug config. Include module as zend extension
+template "#{node['php']['ext_conf_dir']}/xdebug.ini" do
+  source "xdebug.ini.erb"
+  owner "root"
+  group "root"
+  mode "0644"
 end

@@ -52,6 +52,7 @@ Vagrant::Config.run do |config|
       chef.add_recipe "mysql::server"
       chef.add_recipe "php"
       chef.add_recipe "finalize"
+      chef.add_recipe "drupal"
       chef.json = {
           :mysql => {
               "server_root_password" => "root",
