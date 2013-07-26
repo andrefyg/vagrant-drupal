@@ -7,11 +7,11 @@ Vagrant::Config.run do |config|
   # please see the online documentation at vagrantup.com.
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "centos-6.3-chef-10.14.2.box"
+  config.vm.box = "CentOS-6.4-x86_64-v20130427.box"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "https://s3.amazonaws.com/itmat-public/centos-6.3-chef-10.14.2.box"
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
@@ -52,7 +52,7 @@ Vagrant::Config.run do |config|
       chef.add_recipe "mysql::server"
       chef.add_recipe "php"
       chef.add_recipe "finalize"
-      chef.add_recipe "drupal"
+      chef.add_recipe "finalize::drupal"
       chef.json = {
           :mysql => {
               "server_root_password" => "root",
