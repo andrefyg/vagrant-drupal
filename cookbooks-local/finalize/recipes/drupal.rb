@@ -65,14 +65,9 @@ modules_list.each do |project_name|
     end
 end
 
-# Clear drush's cache
-drush_execute "cc drush" do
-    cwd drupal_path
-end
-
 # drush pm-enable
 modules_list.each do |project_name|
-    drush_execute "em" do
+    drush_execute "en" do
         cwd drupal_path
         options %W{#{project_name}
                     --resolve-dependencies}
