@@ -19,11 +19,11 @@
 
 include_recipe "drush"
 
-#Base drupal folder1
+#Base drupal path
 drupal_path = node["finalize"]["apache2"]["docroot"]
 
 drush_execute "dl" do
-    options %w{drupal-7.x
+    options %W{drupal-#{node["finalize"]["drupal"]["core_version"]}
                 --drupal-project-rename=drupal
                 --destination=#{drupal_path}}
 end
@@ -39,10 +39,42 @@ mysql_dsn << "@localhost/#{node["finalize"]["server_name"]}"
 
 #Install drupal
 drush_execute "site-install" do
-    options %w{standard
-                --destination=#{drupal_path}
-                --account-name=admin
-                --account-pass=admin
+    cwd drupal_path
+    options %W{#{node["finalize"]["drupal"]["install_profile"]}
+                --sites-subdir=#{node["finalize"]["drupal"]["sites_subdir"]}
+                --account-name=#{node["finalize"]["drupal"]["account_name"]}
+                --account-pass=#{node["finalize"]["drupal"]["account_pass"]}
                 --db-url=#{mysql_dsn}}
 end
 
+# Install bootstrap modules
+if node["finalize"]["drupal"]["preferred_state"] == "dev"
+    preferred_state = "--dev"
+else
+    preferred_state = ""
+end
+modules_list = node["finalize"]["drupal"]["modules_preset"].concat([node["finalize"]["drupal"]["theme"]])
+
+# drush pm-download
+modules_list.each do |project_name|
+    drush_execute "dl" do
+        cwd drupal_path
+        options %W{#{project_name}
+                    #{preferred_state}
+                    --use-site-dir=#{node["finalize"]["drupal"]["sites_subdir"]}}
+    end
+end
+
+# Clear drush's cache
+drush_execute "cc drush" do
+    cwd drupal_path
+end
+
+# drush pm-enable
+modules_list.each do |project_name|
+    drush_execute "em" do
+        cwd drupal_path
+        options %W{#{project_name}
+                    --resolve-dependencies}
+    end
+end

@@ -26,5 +26,4 @@ template "/vagrant/www/hosts.txt" do
 	owner "vagrant"
     group "vagrant"
     mode "0777"
-    notifies :restart, "service[apache2]", :immediately
 end

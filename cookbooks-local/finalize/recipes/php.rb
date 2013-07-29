@@ -17,8 +17,10 @@
 # limitations under the License.
 #
 
-package "php-xml" do
-  action :install
+["php-xml", "php-pdo", "php-gd"].each do |package_name|
+    package package_name do
+      action :install
+    end
 end
 
 #Pear auto discover option

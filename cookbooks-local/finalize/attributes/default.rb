@@ -17,7 +17,24 @@
 # limitations under the License.
 #
 
-default["finalize"]["server_name"] = "drupal-site"
-default["finalize"]["apache2"]["docroot"] = "/vagrant/www"
+default["finalize"]["server_name"] =                "drupal-site"
+default["finalize"]["apache2"]["docroot"] =         "/vagrant/www"
 #default["finalize"]["apache2"]["server_aliases"] = []
 
+default["finalize"]["drupal"]["sites_subdir"] =     "default"
+default["finalize"]["drupal"]["core_version"] = "7.x"
+default["finalize"]["drupal"]["install_profile"] =  "standard"
+default["finalize"]["drupal"]["account_name"] =     "admin"
+default["finalize"]["drupal"]["account_pass"] =     "admin"
+default["finalize"]["drupal"]["preferred_state"] =  "stable"
+default["finalize"]["drupal"]["theme"] = "omega"
+default["finalize"]["drupal"]["modules_preset"] =   %w{entity
+                                                        features
+                                                        libraries
+                                                        panels
+                                                        devel
+                                                        token
+                                                        ctools
+                                                        pathauto
+                                                        rules
+                                                        admin_menu}
