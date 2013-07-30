@@ -23,13 +23,14 @@ include_recipe "drush"
 drupal_path = node["finalize"]["apache2"]["docroot"]
 
 drush_execute "dl" do
-    options %W{drupal-#{node["finalize"]["drupal"]["core_version"]}
+    options %W{drupal
+                --default-major=#{node["finalize"]["drupal"]["major_version"]}
                 --drupal-project-rename=drupal
                 --destination=#{drupal_path}}
 end
 
 execute "drupal_extract" do
-    command "mv #{drupal_path}/drupal/* #{drupal_path} && rm -rf #{drupal_path}/drupal"
+    command "mv #{drupal_path}/drupal/* #{drupal_path} && rm -rf #{drupal_path}/drupal && mv drupal/.htaccess #{drupal_path}"
 end
 
 #MySQL dsn
@@ -53,23 +54,20 @@ if node["finalize"]["drupal"]["preferred_state"] == "dev"
 else
     preferred_state = ""
 end
-modules_list = node["finalize"]["drupal"]["modules_preset"].concat([node["finalize"]["drupal"]["theme"]])
+modules_list = node["finalize"]["drupal"]["modules_preset"].concat([node["finalize"]["drupal"]["theme"]]).join(",")
 
 # drush pm-download
-modules_list.each do |project_name|
-    drush_execute "dl" do
-        cwd drupal_path
-        options %W{#{project_name}
-                    #{preferred_state}
-                    --use-site-dir=#{node["finalize"]["drupal"]["sites_subdir"]}}
-    end
+drush_execute "dl" do
+    cwd drupal_path
+    options %W{#{modules_list}
+                #{preferred_state}
+                --default-major=#{node["finalize"]["drupal"]["major_version"]}
+                --use-site-dir=#{node["finalize"]["drupal"]["sites_subdir"]}}
 end
 
 # drush pm-enable
-modules_list.each do |project_name|
-    drush_execute "en" do
-        cwd drupal_path
-        options %W{#{project_name}
-                    --resolve-dependencies}
-    end
+drush_execute "en" do
+    cwd drupal_path
+    options %W{#{modules_list}
+                --resolve-dependencies}
 end

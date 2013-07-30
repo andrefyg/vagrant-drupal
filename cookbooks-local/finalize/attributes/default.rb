@@ -22,7 +22,7 @@ default["finalize"]["apache2"]["docroot"] =         "/vagrant/www"
 #default["finalize"]["apache2"]["server_aliases"] = []
 
 default["finalize"]["drupal"]["sites_subdir"] =     "default"
-default["finalize"]["drupal"]["core_version"] = "7.x"
+default["finalize"]["drupal"]["major_version"] = "7"
 default["finalize"]["drupal"]["install_profile"] =  "standard"
 default["finalize"]["drupal"]["account_name"] =     "admin"
 default["finalize"]["drupal"]["account_pass"] =     "admin"
