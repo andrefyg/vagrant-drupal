@@ -1,2 +1,10 @@
 ; configuration for php xdebug module
 zend_extension=<%= node['php']['ext_dir'] %>/xdebug.so
+
+; Remote debug settings
+xdebug.remote_enable=1
+xdebug.remote_connect_back=1
+xdebug.remote_handler=dbgp
+xdebug.remote_host=localhost
+xdebug.remote_port=9000
+xdebug.remote_mode=req

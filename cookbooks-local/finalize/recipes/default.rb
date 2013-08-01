@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+package "vim"
+
 include_recipe "finalize::iptables"
 include_recipe "finalize::php"
 include_recipe "finalize::apache2"

@@ -17,16 +17,30 @@
 # limitations under the License.
 #
 
-["php-xml", "php-pdo", "php-gd"].each do |package_name|
-    package package_name do
-      action :install
+include_recipe "build-essential"
+
+packages_list = ["memcached",
+                "php-pecl-apc",
+                "php-pecl-memcache",
+                "php-pdo",
+                "php-common",
+                "php-mbstring",
+                "php-xml",
+                "php-soap",
+                "php-gd",
+                "php-intl",
+                "php-mysql"]
+
+packages_list.each do |rpm|
+    package rpm do
+        action :install
     end
 end
 
 #Pear auto discover option
-execute "pear_config" do
-	command "pear config-set auto_discover 1"
-end
+#execute "pear_config" do
+#	command "pear config-set auto_discover 1"
+#end
 
 #Update the main pecl/pear channel
 ["pecl.php.net", "pear.php.net"].each do |channel|
@@ -46,7 +60,12 @@ php_pear "PHPUnit" do
 end
 
 #Install pecl/pear packages
-["PHP_CodeSniffer", "xdebug"].each do |package_name|
+packages_list = ["PHP_CodeSniffer",
+                    "imagick",
+                    "xdebug",
+                    "xmlrpc"]
+
+packages_list.each do |package_name|
     php_pear package_name do
         action :install
     end

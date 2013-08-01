@@ -19,8 +19,7 @@
 
 web_app node["finalize"]["server_name"] do
   server_name node["finalize"]["server_name"]
-  server_aliases [node["finalize"]["server_name"]]
+  server_aliases ["*." + node["finalize"]["server_name"]]
   docroot node["finalize"]["apache2"]["docroot"]
   cookbook "apache2"
-  enable true
 end

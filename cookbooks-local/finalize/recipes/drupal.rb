@@ -30,7 +30,7 @@ drush_execute "dl" do
 end
 
 execute "drupal_extract" do
-    command "mv #{drupal_path}/drupal/* #{drupal_path} && rm -rf #{drupal_path}/drupal && mv drupal/.htaccess #{drupal_path}"
+    command "mv #{drupal_path}/drupal/* #{drupal_path}/drupal/.[^.]* #{drupal_path} && rm -rf #{drupal_path}/drupal"
 end
 
 #MySQL dsn

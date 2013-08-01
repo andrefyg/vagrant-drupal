@@ -48,11 +48,10 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
       chef.cookbooks_path = ["cookbooks-local", "cookbooks"]
       chef.add_recipe "yum::yum"
-      chef.add_recipe "build-essential"
+      chef.add_recipe "php"
       chef.add_recipe "apache2"
       chef.add_recipe "mysql"
       chef.add_recipe "mysql::server"
-      chef.add_recipe "php"
       chef.add_recipe "finalize"
       chef.add_recipe "finalize::drupal"
       chef.json = {
