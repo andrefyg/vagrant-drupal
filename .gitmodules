@@ -22,3 +22,6 @@
 [submodule "cookbooks/yum"]
 	path = cookbooks/yum
 	url = https://github.com/opscode-cookbooks/yum
+[submodule "cookbooks/drush"]
+	path = cookbooks/drush
+	url = https://github.com/ksorokin/chef-drush.git

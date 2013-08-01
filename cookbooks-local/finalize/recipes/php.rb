@@ -20,12 +20,15 @@
 include_recipe "build-essential"
 
 packages_list = ["memcached",
+                "ImageMagick",
+                "ImageMagick-devel",
                 "php-pecl-apc",
                 "php-pecl-memcache",
                 "php-pdo",
                 "php-common",
                 "php-mbstring",
                 "php-xml",
+                "php-xmlrpc",
                 "php-soap",
                 "php-gd",
                 "php-intl",
@@ -62,8 +65,7 @@ end
 #Install pecl/pear packages
 packages_list = ["PHP_CodeSniffer",
                     "imagick",
-                    "xdebug",
-                    "xmlrpc"]
+                    "xdebug"]
 
 packages_list.each do |package_name|
     php_pear package_name do
