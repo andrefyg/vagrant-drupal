@@ -17,8 +17,7 @@
 # limitations under the License.
 #
 
-include_recipe "build-essential"
-
+# Finalize php installation with extras
 packages_list = ["memcached",
                 "ImageMagick",
                 "ImageMagick-devel",
@@ -41,39 +40,35 @@ packages_list.each do |rpm|
 end
 
 #Pear auto discover option
-#execute "pear_config" do
-#	command "pear config-set auto_discover 1"
-#end
+execute "pear clear-cache"
+execute "pear config-set auto_discover 1"
 
-#Update the main pecl/pear channel
-["pecl.php.net", "pear.php.net"].each do |channel|
+#Update the main pecl/pear channels
+["pecl.php.net", "pear.php.net", "pear.symfony.com"].each do |channel|
     php_pear_channel channel do
       action :update
     end
 end
 
-#PHPUnit
-PHPUnit_de = php_pear_channel "pear.phpunit.de" do
+#PHPUnit and dependencies
+
+PHPUnit_channel = php_pear_channel "pear.phpunit.de" do
   action :discover
 end
 
 php_pear "PHPUnit" do
-  channel PHPUnit_de.channel_name
+  channel PHPUnit_channel.channel_name
   action :install
 end
 
 #Install pecl/pear packages
-packages_list = ["PHP_CodeSniffer",
-                    "imagick",
-                    "xdebug"]
-
-packages_list.each do |package_name|
+["PHP_CodeSniffer","imagick","xdebug"].each do |package_name|
     php_pear package_name do
         action :install
     end
 end
 
-#Xdebug config. Include module as zend extension
+#Xdebug config. Include module as zend_extension
 template "#{node['php']['ext_conf_dir']}/xdebug.ini" do
   source "xdebug.ini.erb"
   owner "root"
