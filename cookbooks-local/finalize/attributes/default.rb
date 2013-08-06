@@ -19,7 +19,6 @@
 
 default["finalize"]["server_name"] =                "drupal-site"
 default["finalize"]["apache2"]["docroot"] =         "/vagrant/www"
-#default["finalize"]["apache2"]["server_aliases"] = []
 
 default["finalize"]["drupal"]["sites_subdir"] =     "default"
 default["finalize"]["drupal"]["major_version"] = "7"

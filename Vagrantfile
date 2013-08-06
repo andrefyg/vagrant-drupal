@@ -46,20 +46,40 @@ Vagrant::Config.run do |config|
 
   # Provision with a shell script
   config.vm.provision :chef_solo do |chef|
-      chef.cookbooks_path = ["cookbooks-local", "cookbooks"]
-      chef.add_recipe "yum::yum"
-      chef.add_recipe "php"
-      chef.add_recipe "apache2"
-      chef.add_recipe "mysql"
-      chef.add_recipe "mysql::server"
-      chef.add_recipe "finalize"
-      chef.add_recipe "finalize::drupal"
-      chef.json = {
-          :mysql => {
-              "server_root_password" => "root",
-              "server_repl_password" => "root",
-              "server_debian_password" => "root"
-            }
+    chef.cookbooks_path = ["cookbooks-local", "cookbooks"]
+    chef.add_recipe "yum::yum"
+    chef.add_recipe "php"
+    chef.add_recipe "apache2"
+    chef.add_recipe "mysql"
+    chef.add_recipe "mysql::server"
+    chef.add_recipe "finalize"
+    chef.add_recipe "finalize::drupal"
+    chef.json = {
+      :php => {
+        "directives" => {
+          "memory_limit" => "256M",
+          "error_log" => "/vagrant/logs/php.log",
+          "display_errors" => "On"
+        }
+      },
+      :drush => {
+        "install_method" => "git",
+        "version" => "7.x-5.9"
+      },
+      :finalize => {
+        :server_name => "drupal-site",
+        :drupal => {
+          "sites_subdir" => "default",   # Default "default"
+          "major_version" => "7",        # Default "7"
+          "preferred_state" => "stable", # Default "stable"
+          "theme" => "omega"             # Default "omega"
+        }
+      },
+      :mysql => {
+        "server_root_password" => "root",
+        "server_repl_password" => "root",
+        "server_debian_password" => "root"
       }
-    end
+    }
+end
 end
