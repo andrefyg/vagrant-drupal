@@ -25,6 +25,7 @@ to add `/opt/vagrant/bin` to your `PATH`. After this, you're ready to go!
 To build your first drupal virtual environment from scratch:
 
     git clone https://github.com/ksorokin/vagrant-drupal.git
+    cd vagrant-drupal
     git submodule init
     git submodule update
     vagrant up
