@@ -17,6 +17,8 @@
 # limitations under the License.
 #
 
+include_recipe "solr"
+include_recipe "varnish"
 include_recipe "drush"
 
 #Base drupal path
