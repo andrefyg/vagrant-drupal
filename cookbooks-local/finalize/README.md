@@ -46,9 +46,9 @@ Drupal config
 ### default
 Completes apache and php configuration. 
 
-### apache2
+### web_server
 
-Creates viratual host
+Creates apache viratual host, nginx config, installs and configures varnish
 
 ### iptables
 
