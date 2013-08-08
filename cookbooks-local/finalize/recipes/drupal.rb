@@ -16,20 +16,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-include_recipe "solr"
-include_recipe "varnish"
 include_recipe "drush"
+include_recipe "cron"
 
 #Base drupal path
 drupal_path = node["finalize"]["apache2"]["docroot"]
 
 if !File.exists? drupal_path + "/install.php"
-    drush_execute "dl" do
-        options %W{drupal
-                    --default-major=#{node["finalize"]["drupal"]["major_version"]}
-                    --drupal-project-rename=drupal
-                    --destination=#{drupal_path}}
+    if node["finalize"]["drupal"]["pressflow"]
+        # Git sync
+        include_recipe "git"
+        git drupal_path + "/drupal" do
+            repository "https://github.com/pressflow/#{node["finalize"]["drupal"]["major_version"]}.git"
+            action :sync
+        end
+        directory drupal_path + "/drupal/.git" do
+            recursive true
+            ignore_failure true
+            action :delete
+        end
+    else
+        drush_execute "dl" do
+            options %W{drupal
+                      --default-major=#{node["finalize"]["drupal"]["major_version"]}
+                      --drupal-project-rename=drupal
+                      --destination=#{drupal_path}}
+        end
     end
 
     execute "drupal_extract" do
@@ -76,4 +88,21 @@ if !File.exists? drupal_path + "/sites/" + node["finalize"]["drupal"]["sites_sub
         options %W{#{modules_list}
                    --resolve-dependencies}
     end
+
+    # Set default theme
+    drush_execute "vset" do
+        cwd drupal_path
+        options ["theme_default #{node["finalize"]["drupal"]["theme"]}"]
+    end
+
+    # Set up cron job
+    cron_d "cron-job" do
+      minute 10
+      command "wget -O - -q -t 1 http://localhost/cron.php"
+    end
+end
+
+# drush cache-clear
+drush_execute "cc" do
+    cwd drupal_path
 end

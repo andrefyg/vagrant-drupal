@@ -52,14 +52,14 @@ end
 
 #PHPUnit and dependencies
 
-PHPUnit_channel = php_pear_channel "pear.phpunit.de" do
-  action :discover
-end
+# PHPUnit_channel = php_pear_channel "pear.phpunit.de" do
+#   action :discover
+# end
 
-php_pear "PHPUnit" do
-  channel PHPUnit_channel.channel_name
-  action :install
-end
+# php_pear "PHPUnit" do
+#   channel PHPUnit_channel.channel_name
+#   action :install
+# end
 
 #Install pecl/pear packages
 ["PHP_CodeSniffer","imagick","xdebug"].each do |package_name|

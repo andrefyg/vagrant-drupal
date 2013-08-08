@@ -20,6 +20,7 @@
 default["finalize"]["server_name"] =                "drupal-site"
 default["finalize"]["apache2"]["docroot"] =         "/vagrant/www"
 
+default["finalize"]["drupal"]["pressflow"] = false
 default["finalize"]["drupal"]["sites_subdir"] =     "default"
 default["finalize"]["drupal"]["major_version"] = "7"
 default["finalize"]["drupal"]["install_profile"] =  "standard"
@@ -30,7 +31,6 @@ default["finalize"]["drupal"]["theme"] = "omega"
 default["finalize"]["drupal"]["modules_preset"] =   %w{entity
                                                         features
                                                         libraries
-                                                        panels
                                                         devel
                                                         token
                                                         ctools

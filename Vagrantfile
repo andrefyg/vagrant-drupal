@@ -49,7 +49,9 @@ Vagrant::Config.run do |config|
     chef.cookbooks_path = ["cookbooks-local", "cookbooks"]
     chef.add_recipe "yum::yum"
     chef.add_recipe "php"
+    chef.add_recipe "nginx"
     chef.add_recipe "apache2"
+    chef.add_recipe "solr"
     chef.add_recipe "mysql"
     chef.add_recipe "mysql::server"
     chef.add_recipe "finalize"
@@ -62,23 +64,32 @@ Vagrant::Config.run do |config|
           "display_errors" => "On"
         }
       },
-      :drush => {
-        "install_method" => "git",
-        "version" => "7.x-5.9"
+      :apache => {
+        :listen_ports => [8080]
+      },
+      :mysql => {
+        "server_root_password" => "root",
+        "server_repl_password" => "root",
+        "server_debian_password" => "root"
       },
       :finalize => {
         :server_name => "drupal-site",
         :drupal => {
+          # If pressflow set to true, drupal core will be pulled out from https://github.com/pressflow/<major_version>.git
+          # for more info visit http://pressflow.org/faq
+          "pressflow" => true,           # Default false
           "sites_subdir" => "default",   # Default "default"
           "major_version" => "7",        # Default "7"
           "preferred_state" => "stable", # Default "stable"
           "theme" => "omega"             # Default "omega"
         }
       },
-      :mysql => {
-        "server_root_password" => "root",
-        "server_repl_password" => "root",
-        "server_debian_password" => "root"
+      :solr => {
+        "version" => "4.4.0"
+      },
+      :drush => {
+        "install_method" => "git",
+        "version" => "7.x-5.9"
       }
     }
 end
