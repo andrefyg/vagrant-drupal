@@ -75,7 +75,8 @@ Vagrant::Config.run do |config|
       :finalize => {
         :server_name => "drupal-site",
         :drupal => {
-          # If pressflow set to true, drupal core will be pulled out from https://github.com/pressflow/<major_version>.git
+          # If pressflow set to true, drupal core will be pulled out
+          # from https://github.com/pressflow/<major_version>.git
           # for more info visit http://pressflow.org/faq
           "pressflow" => true,           # Default false
           "sites_subdir" => "default",   # Default "default"
