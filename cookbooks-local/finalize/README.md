@@ -23,8 +23,9 @@ Apache config
 
 Drupal config
 
+    default["finalize"]["drupal"]["pressflow"] =        false
     default["finalize"]["drupal"]["sites_subdir"] =     "default"
-    default["finalize"]["drupal"]["major_version"] = "7"
+    default["finalize"]["drupal"]["major_version"] =    "7"
     default["finalize"]["drupal"]["install_profile"] =  "standard"
     default["finalize"]["drupal"]["account_name"] =     "admin"
     default["finalize"]["drupal"]["account_pass"] =     "admin"
@@ -33,7 +34,6 @@ Drupal config
     default["finalize"]["drupal"]["modules_preset"] =   %w{entity
                                                             features
                                                             libraries
-                                                            panels
                                                             devel
                                                             token
                                                             ctools
