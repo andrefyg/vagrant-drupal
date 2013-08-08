@@ -2,6 +2,19 @@
   
   A chef-based project template provides easy to configure, reproducible, and portable work environments for drupal development.
 
+*Server stack:*
+
+* nginx
+* varnish
+* apache2
+* php
+* mysql
+* solr
+
+for more info about server stack [see image](http://www.unixguru.co.uk/wp-content/uploads/2013/02/UnixGuruNVAColour1.png)
+
+-------------
+
 ## Vagrant
 
 * Website: [http://www.vagrantup.com](http://www.vagrantup.com)
