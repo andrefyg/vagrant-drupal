@@ -18,22 +18,7 @@
 #
 
 # Finalize php installation with extras
-packages_list = ["memcached",
-                "ImageMagick",
-                "ImageMagick-devel",
-                "php-pecl-apc",
-                "php-pecl-memcache",
-                "php-pdo",
-                "php-common",
-                "php-mbstring",
-                "php-xml",
-                "php-xmlrpc",
-                "php-soap",
-                "php-gd",
-                "php-intl",
-                "php-mysql"]
-
-packages_list.each do |rpm|
+node["finalize"]["php"]["packages"].each do |rpm|
     package rpm do
         action :install
     end

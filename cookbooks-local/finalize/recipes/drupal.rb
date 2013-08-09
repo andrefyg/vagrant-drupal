@@ -45,7 +45,7 @@ if !File.exists? drupal_path + "/install.php"
     end
 
     execute "drupal_extract" do
-        command "mv #{drupal_path}/drupal/* #{drupal_path}/drupal/.[^.]* #{drupal_path} && rm -rf #{drupal_path}/drupal"
+        command "mv #{drupal_path}/drupal/* #{drupal_path}/drupal/.[a-zA-Z0-9\_]* #{drupal_path} && rm -rf #{drupal_path}/drupal"
     end
 end
 

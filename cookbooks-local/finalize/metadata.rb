@@ -16,3 +16,7 @@ depends          "cron"
 depends          "drush"
 depends          "nginx"
 depends          "varnish"
+
+%w{ ubuntu debian centos redhat}.each do |os|
+  supports os
+end

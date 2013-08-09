@@ -20,16 +20,23 @@
 
 # Varnish platform specific config, fix for unsupported platforms
 case node[:platform]
-when "centos"
+when "centos", "redhat"
   shell_out("rpm --nosignature -vi http://repo.varnish-cache.org/redhat/varnish-3.0/el5/noarch/varnish-release-3.0-1.el5.centos.noarch.rpm")
-
   node.set['varnish']['dir']     = "/etc/varnish"
   node.set['varnish']['default'] = "/etc/default/varnish"
-  node.set['varnish']['vcl_source'] = "varnish.vlc.erb"
-  node.set['varnish']['vcl_cookbook'] = "finalize"
-  node.set['varnish']['storage_size'] = "256MB"
-  node.set['varnish']['version'] = "3.0.1"
+when "ubuntu", "debian"
+ command = "wget -qO - http://repo.varnish-cache.org/debian/GPG-key.txt | sudo apt-key add -"
+ command << " && echo \"deb http://repo.varnish-cache.org/ubuntu/ precise varnish-3.0\" | sudo tee -a /etc/apt/sources.list"
+ command << " && apt-get update"
+ shell_out(command)
 end
+
+# Varnish configuration
+node.set['varnish']['storage_file'] = '/var/lib/varnish/varnish_storage.bin'
+node.set['varnish']['vcl_source'] = "varnish.vlc.erb"
+node.set['varnish']['vcl_cookbook'] = "finalize"
+node.set['varnish']['storage_size'] = "256MB"
+node.set['varnish']['version'] = "3.0.1"
 
 include_recipe "varnish"
 
@@ -40,7 +47,8 @@ template "#{node['nginx']['dir']}/sites-available/default" do
   mode 00644
   variables(
     :server_name => node["finalize"]["server_name"],
-    :varnish => node['varnish']
+    :varnish => node['varnish'],
+    :docroot => node["finalize"]["apache2"]["docroot"]
   )
   notifies :reload, 'service[nginx]'
 end

@@ -17,8 +17,7 @@
 # limitations under the License.
 #
 
-package "vim"
-
+include_recipe "build-essential"
 include_recipe "finalize::iptables"
 include_recipe "finalize::php"
 include_recipe "finalize::web_server"

@@ -37,3 +37,15 @@ default["finalize"]["drupal"]["modules_preset"] =   %w{entity
                                                         pathauto
                                                         rules
                                                         admin_menu}
+
+case node[:platform]
+when "redhat", "centos"
+    default["finalize"]["php"]["packages"] = ["memcached", "ImageMagick", "ImageMagick-devel", "php-pecl-apc",
+                                                "php-pecl-memcache", "php-pdo", "php-common", "php-mbstring", "php-xml",
+                                                "php-xmlrpc", "php-soap", "php-gd", "php-intl", "php-mysql"]
+when "debian", "ubuntu"
+    default["finalize"]["php"]["packages"] = ["memcached", "imagemagick", "libmagickcore-dev", "libmagickwand-dev",
+                                                "php-apc", "php5-memcache", "php5-memcached", "php5-common",
+                                                "php5-cli", "php5-xmlrpc", "php-soap", "php5-gd", "php5-intl",
+                                                "php5-mysql", "libapache2-mod-php5"]
+end
