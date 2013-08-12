@@ -1,8 +1,7 @@
 #
+# Author::  Konstantin Sorokin (<k.n.sorokin@gmail.com>)
 # Cookbook Name:: finalize
-# Recipe:: default
-#
-# Copyright 2013, Konstantin Sorokin
+# Libraries:: helpers
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,15 +15,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
-#include_recipe "build-essential"
-#include_recipe "finalize::iptables"
-include_recipe "finalize::php"
-#include_recipe "finalize::web_server"
-
-template "/vagrant/www/hosts.txt" do
-	source "hosts.erb"
-	owner "vagrant"
-    group "vagrant"
-    mode "0777"
+module Finalize
+    module Helper
+        def php_ext_dir
+            cmd = shell_out("php -i | grep extension_dir").stdout.split("\n").last
+            if !cmd
+                "/usr/lob/php/modules"
+            else
+                cmd.split(" ").last
+            end
+        end
+    end
 end

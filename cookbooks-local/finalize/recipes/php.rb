@@ -16,6 +16,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+include_recipe "php"
+
+template "/usr/bin/logmail" do
+	source "logmail.sh.erb"
+	owner "root"
+    group "root"
+    mode "0775"
+end
 
 # Finalize php installation with extras
 node["finalize"]["php"]["packages"].each do |rpm|
@@ -54,9 +62,16 @@ end
 end
 
 #Xdebug config. Include module as zend_extension
-template "#{node['php']['ext_conf_dir']}/xdebug.ini" do
-  source "xdebug.ini.erb"
-  owner "root"
-  group "root"
-  mode "0644"
+ruby_block "xdebug configuration" do
+    block do
+        Chef::Resource::RubyBlock.send(:include, Finalize::Helper)
+        template = Chef::Resource::Template.new "#{node['php']['ext_conf_dir']}/xdebug.ini", run_context
+        template.source "xdebug.ini.erb"
+        template.cookbook "finalize"
+        template.owner "root"
+        template.group "root"
+        template.mode "0644"
+        template.variables(:ext_dir => php_ext_dir)
+        template.run_action :create
+    end
 end

@@ -1,0 +1,5 @@
+#!/bin/bash
+LOG="/vagrant/logs/mail.log"
+while read -r -a array; do
+    echo ${array[*]} >> ${LOG}
+done
