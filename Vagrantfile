@@ -69,6 +69,7 @@ Vagrant::Config.run do |config|
         }
       },
       :apache => {
+        :log_dir => "/vagrant/logs",
         :listen_ports => [8080]
       },
       :mysql => {
