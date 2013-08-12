@@ -17,10 +17,10 @@
 # limitations under the License.
 #
 
-#include_recipe "build-essential"
-#include_recipe "finalize::iptables"
+include_recipe "build-essential"
+include_recipe "finalize::iptables"
 include_recipe "finalize::php"
-#include_recipe "finalize::web_server"
+include_recipe "finalize::web_server"
 
 template "/vagrant/www/hosts.txt" do
 	source "hosts.erb"
