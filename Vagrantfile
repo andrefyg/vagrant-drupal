@@ -8,14 +8,14 @@ Vagrant::Config.run do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "CentOS-6.4-x86_64-v20130427.box"
-  #config.vm.box = "ubuntu-12.04.2-i386-chef-11-omnibus.box"
+  # config.vm.box = "ubuntu-12.04.2-i386-chef-11-omnibus.box"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   #
   # ***CentOS 6.4 x86_64 Minimal (VirtualBox Guest Additions 4.2.12, Chef 11.4.4, Puppet 3.1.1)
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
-  #config.vm.box_url = "http://grahamc.com/vagrant/ubuntu-12.04.2-i386-chef-11-omnibus.box"
+  # config.vm.box_url = "http://grahamc.com/vagrant/ubuntu-12.04.2-i386-chef-11-omnibus.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)
   # config.vm.boot_mode = :gui
@@ -50,6 +50,7 @@ Vagrant::Config.run do |config|
   config.vm.provision :chef_solo do |chef|
     chef.cookbooks_path = ["cookbooks-local", "cookbooks"]
     chef.add_recipe "yum"
+    chef.add_recipe "yum::remi"
     chef.add_recipe "php"
     chef.add_recipe "nginx"
     chef.add_recipe "apache2"
@@ -66,7 +67,11 @@ Vagrant::Config.run do |config|
           "display_errors" => "On",
           # Sendmail mocking
           "sendmail_path" => "/usr/bin/logmail"
-        }
+        },
+        # php source from source
+        # "version" => "5.4.17",
+        # "checksum" => "cc698032dcdcb9ad158edcc90fe798d6",
+        # "install_method" => "source"
       },
       :apache => {
         :log_dir => "/vagrant/logs",

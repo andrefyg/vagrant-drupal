@@ -22,7 +22,7 @@ include_recipe "cron"
 #Base drupal path
 drupal_path = node["finalize"]["apache2"]["docroot"]
 
-if !File.exists? drupal_path + "/install.php"
+if !File.exists? drupal_path + "/index.php"
     if node["finalize"]["drupal"]["pressflow"]
         # Git sync
         include_recipe "git"

@@ -21,12 +21,16 @@ include Chef::Mixin::ShellOut
 module Finalize
     module Helper
         def php_ext_dir
-            cmd = shell_out("php -i | grep extension_dir").stdout.split("\n").last
+            cmd = shell_out("php -i | grep -e '^extension_dir'").stdout.split("\n").last
             if !cmd
-                "/usr/lob/php/modules"
+                "/usr/lib/php/modules"
             else
                 cmd.split(" ").last
             end
+        end
+
+        def php_xdebug_module
+            shell_out("find / -name xdebug.so").stdout.split("\n").last
         end
     end
 end

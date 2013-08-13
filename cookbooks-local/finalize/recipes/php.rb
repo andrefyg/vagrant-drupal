@@ -58,6 +58,7 @@ end
 ["PHP_CodeSniffer","imagick","xdebug"].each do |package_name|
     php_pear package_name do
         action :install
+        preferred_state node["finalize"]["php"]["preferred_state"]
     end
 end
 
@@ -65,13 +66,23 @@ end
 ruby_block "xdebug configuration" do
     block do
         Chef::Resource::RubyBlock.send(:include, Finalize::Helper)
+        extensions_dir = php_ext_dir
+        xdebug_location = php_xdebug_module
+
+        if "#{extensions_dir}/xdebug.so" != xdebug_location
+            link = Chef::Resource::Link.new "#{extensions_dir}/xdebug.so", run_context
+            link.to xdebug_location
+            link.ignore_failure true
+            link.run_action :create
+        end
+
         template = Chef::Resource::Template.new "#{node['php']['ext_conf_dir']}/xdebug.ini", run_context
         template.source "xdebug.ini.erb"
         template.cookbook "finalize"
         template.owner "root"
         template.group "root"
         template.mode "0644"
-        template.variables(:ext_dir => php_ext_dir)
+        template.variables(:ext_dir => extensions_dir)
         template.run_action :create
     end
 end
