@@ -13,6 +13,8 @@
 
 for more info about server stack [see image](http://www.unixguru.co.uk/wp-content/uploads/2013/02/UnixGuruNVAColour1.png)
 
+Tested on CentOS 64 and Ubuntu 32/64
+
 -------------
 
 ## Vagrant
@@ -46,6 +48,34 @@ To build your first drupal virtual environment from scratch:
 ## Vagrantfile
 
 It is common to modify the [Vagrantfile](https://github.com/ksorokin/vagrant-drupal/blob/master/Vagrantfile) to meet project needs. Read through the comments in the Vagrantfile as well as the [official documentation](http://docs.vagrantup.com/v2/) for other possible configurations.
+
+##Attributes
+
+Apache config
+
+    default["finalize"]["server_name"] =                "drupal-site"
+    default["finalize"]["apache2"]["docroot"] =         "/vagrant/www"
+
+
+Drupal config
+
+    default["finalize"]["drupal"]["pressflow"] =        false
+    default["finalize"]["drupal"]["sites_subdir"] =     "default"
+    default["finalize"]["drupal"]["major_version"] =    "7"
+    default["finalize"]["drupal"]["install_profile"] =  "standard"
+    default["finalize"]["drupal"]["account_name"] =     "admin"
+    default["finalize"]["drupal"]["account_pass"] =     "admin"
+    default["finalize"]["drupal"]["preferred_state"] =  "stable"
+    default["finalize"]["drupal"]["theme"] = "omega"
+    default["finalize"]["drupal"]["modules_preset"] =   %w{entity
+                                                            features
+                                                            libraries
+                                                            devel
+                                                            token
+                                                            ctools
+                                                            pathauto
+                                                            rules
+                                                            admin_menu}
 
 ### Cookbooks
 
