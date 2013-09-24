@@ -2,6 +2,9 @@
 # vi: set ft=ruby :
 
 Vagrant::configure("2") do |config|
+
+  vagrant_version = Vagrant::VERSION.sub(/^v/, '')
+
   # All Vagrant configuration is done here. The most common configuration
   # options are documented and commented below. For a complete reference,
   # please see the online documentation at vagrantup.com.
@@ -45,8 +48,15 @@ Vagrant::configure("2") do |config|
   # Share an additional folder to the guest VM. The first argument is
   # an identifier, the second is the path on the guest to mount the
   # folder, and the third is the path on the host to the actual folder.
-  #config.vm.share_folder "v-root", "/vagrant", ".", :nfs => true
-  config.vm.synced_folder "./", "/vagrant", :mount_options => ["dmode=777","fmode=777"]
+  # config.vm.share_folder "v-root", "/vagrant", ".", :nfs => true
+
+  # Switch :mount_options and :extras based on vagrant version
+  if vagrant_version >= "1.3.0"
+    config.vm.synced_folder "./", "/vagrant", :mount_options => ["dmode=777","fmode=777"]
+  else
+    config.vm.synced_folder "./", "/vagrant", :extra => ["dmode=777","fmode=777"]
+  end
+
 
   # Provision with a shell script
   config.vm.provision :chef_solo do |chef|
@@ -88,7 +98,7 @@ Vagrant::configure("2") do |config|
         :apache2 => {
           :docroot => "/vagrant/www/docroot",
         },
-        :server_name => "drupal.localhost.com",
+        :server_name => "drupal.local.com",
         :drupal => {
           # If pressflow set to true, drupal core will be pulled out
           # from https://github.com/pressflow/<major_version>.git
@@ -108,5 +118,5 @@ Vagrant::configure("2") do |config|
         "version" => "7.x-5.8"
       }
     }
-end
+  end
 end
