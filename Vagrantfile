@@ -88,7 +88,7 @@ Vagrant::configure("2") do |config|
         :apache2 => {
           :docroot => "/vagrant/www/docroot",
         },
-        :server_name => "princeton.local.com",
+        :server_name => "drupal.localhost.com",
         :drupal => {
           # If pressflow set to true, drupal core will be pulled out
           # from https://github.com/pressflow/<major_version>.git
