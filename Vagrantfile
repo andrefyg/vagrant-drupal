@@ -55,7 +55,7 @@ Vagrant::configure("2") do |config|
     #chef.add_recipe "yum::remi"
     chef.add_recipe "php"
     chef.add_recipe "nginx"
-    chef.add_recipe "apac   he2"
+    chef.add_recipe "apache2"
     chef.add_recipe "solr"
     chef.add_recipe "mysql"
     chef.add_recipe "mysql::server"
