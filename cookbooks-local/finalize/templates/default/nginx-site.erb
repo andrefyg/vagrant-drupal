@@ -47,19 +47,7 @@
                  return 403;
          }
 
-         # Fighting with Styles? This little gem is amazing.
-         # This is for D6
-         #location ~ ^/sites/.*/files/imagecache/ {
-         # This is for D7 and D8
-         location ~ ^/sites/.*/files/styles/ {
-               try_files $uri @rewrite;
-         }
-
-         location ~* \.(jpg|jpeg|gif|png|svg|js|css|mp3|ogg|mpe?g|avi|zip|gz|bz2?|rar)$ {
-               expires max;
-               log_not_found off;
-         }
-
+         
          location / {
                  # This is cool because no php is touched for static content
                  try_files $uri @rewrite;
@@ -82,5 +70,18 @@
                 proxy_set_header Host $host;
                 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
                 proxy_set_header X-Real-IP $remote_addr;
+         }
+         
+         # Fighting with Styles? This little gem is amazing.
+         # This is for D6
+         #location ~ ^/sites/.*/files/imagecache/ {
+         # This is for D7 and D8
+         location ~ ^/sites/.*/files/styles/ {
+               try_files $uri @rewrite;
+         }
+
+         location ~* \.(jpg|jpeg|gif|png|svg|js|css|mp3|ogg|mpe?g|avi|zip|gz|bz2?|rar)$ {
+               expires max;
+               log_not_found off;
          }
 }
