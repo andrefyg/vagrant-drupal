@@ -65,18 +65,18 @@
                  try_files $uri @rewrite;
          }
 
-         #location @rewrite {
-         #        # You have 2 options here
-         #        # For D7 and above:
-         #        # Clean URLs are handled in drupal_environment_initialize().
-         #        rewrite ^ /index.php;
-         #        # For Drupal 6 and bwlow:
-         #        # Some modules enforce no slash (/) at the end of the URL
-         #        # Else this rewrite block wouldn't be needed (GlobalRedirect)
-         #        #rewrite ^/(.*)$ /index.php?q=$1;
-         #}
-
          location @rewrite {
+                 # You have 2 options here
+                 # For D7 and above:
+                 # Clean URLs are handled in drupal_environment_initialize().
+                 rewrite ^ /index.php;
+                 # For Drupal 6 and bwlow:
+                 # Some modules enforce no slash (/) at the end of the URL
+                 # Else this rewrite block wouldn't be needed (GlobalRedirect)
+                 #rewrite ^/(.*)$ /index.php?q=$1;
+         }
+
+         location ~ \.php$ {
                 proxy_pass http://127.0.0.1:<%= @varnish['listen_port'] %>;
                 proxy_redirect http://<%= @varnish['backend_host'] %>:<%= @varnish['listen_port'] %>/ /;
                 proxy_set_header Host $host;
