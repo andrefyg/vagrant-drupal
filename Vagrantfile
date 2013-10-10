@@ -54,7 +54,7 @@ Vagrant::configure("2") do |config|
   if vagrant_version >= "1.3.0"
     config.vm.synced_folder "./", "/vagrant", :nfs => true
   else
-    config.vm.synced_folder "./", "/vagrant", :nfs = > true
+    config.vm.synced_folder "./", "/vagrant", :nfs => true
   end
 
 
