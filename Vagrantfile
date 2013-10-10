@@ -52,9 +52,9 @@ Vagrant::configure("2") do |config|
 
   # Switch :mount_options and :extras based on vagrant version
   if vagrant_version >= "1.3.0"
-    config.vm.synced_folder "./", "/vagrant", :mount_options => ["dmode=777","fmode=777"]
+    config.vm.synced_folder "./", "/vagrant", :nfs => true
   else
-    config.vm.synced_folder "./", "/vagrant", :extra => ["dmode=777","fmode=777"]
+    config.vm.synced_folder "./", "/vagrant", :nfs = > true
   end
 
 
