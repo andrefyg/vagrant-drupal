@@ -78,8 +78,7 @@ Vagrant::configure("2") do |config|
           "error_log" => "/vagrant/logs/php.log",
           "display_errors" => "On",
           # Sendmail mocking
-          "sendmail_path" => "/usr/bin/logmail",
-          "apc.ttl" => 0
+          "sendmail_path" => "/usr/bin/logmail"
         },
         # php source from source
         # "version" => "5.4.17",
