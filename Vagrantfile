@@ -16,8 +16,9 @@ Vagrant::configure("2") do |config|
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   #
-  # ***CentOS 6.4 x86_64 Minimal (VirtualBox Guest Additions 4.2.12, Chef 11.4.4, Puppet 3.1.1)
-  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130427.box"
+  # ***CentOS 6.4 x86_64 Minimal (VirtualBox Guest Additions 4.2.12, Chef 12.2.1, Puppet 3.1.1)
+  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.6-x86_64-v20150426.box"
+
   # config.vm.box_url = "http://grahamc.com/vagrant/ubuntu-12.04.2-i386-chef-11-omnibus.box"
 
   # Boot with a GUI so you can see the screen. (Default is headless)

@@ -1,3 +1,4 @@
+name             "finalize"
 maintainer       "Konstantin Sorokin"
 maintainer_email "k.n.sorokin@gmail.com"
 license          "Apache 2.0"
